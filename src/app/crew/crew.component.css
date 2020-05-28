@@ -20,3 +20,16 @@ h3 {
 }
 
 /* Add a 'selected' class here to style selected astronaut names a different color. */
+.selected {
+    color:lightseagreen;
+}
+
+ul, p {
+    color: #06744e;
+}
+
+.container {
+    background-color: #e0ffe4;
+    margin-left: 50px;
+    width: 250px;
+}

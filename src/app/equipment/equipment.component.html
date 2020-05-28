@@ -1,22 +1,29 @@
-<div class="displayBox">
-    <h3>Equipment</h3>
-    <ol>
-        <li *ngFor="let item of equipmentItems">
-            <!-- "Add to Cargo Hold" button goes here. -->
-            {{item.name}}, {{item.mass}} kg
-        </li>
-    </ol>
-</div>
+<div class="container">
+    <div class="displayBox">
+        <h3>Equipment</h3>
+        <ol>
+            <li *ngFor="let item of equipmentItems">
+                <button [class.active]="item.mass+cargoMass<=maximumAllowedMass && cargoHold.length < maxItems" [disabled]="item.mass+cargoMass>maximumAllowedMass || cargoHold.length >= maxItems" (click)="nearCapacity = addItem(item)">
+                    Add to Cargo Hold
+                </button>
+                {{item.name}}, {{item.mass}} kg
+            </li>
+        </ol>
+    </div>
 
-<hr>
+    <hr>
 
-<div class = "displayBox">
-    <h3>Cargo Hold: {{cargoHold.length}}/{{maxItems}} Spots Filled</h3>
-    <ol>
-        <li *ngFor="let equipment of cargoHold">{{equipment.name}}</li>
-    </ol>
-    <p>Mass in Hold: {{cargoMass}} kg</p>
-    <p>Mass Budget Remaining: {{<!-- Calculate mass remaining here. -->}} kg</p>
-    <!-- Add the "Empty Hold" button here. -->
+    <div class = "displayBox">
+        <h3>Cargo Hold: {{cargoHold.length}}/{{maxItems}} Spots Filled</h3>
+        <ol>
+            <li *ngFor="let equipment of cargoHold">
+                {{equipment.name}}
+                <button class="remove" (click)="remove(equipment)">remove</button>
+            </li>
+        </ol>
+        <p>Mass in Hold: {{cargoMass}} kg</p>
+        <p [class.nearMaxMass]="nearCapacity">Mass Budget Remaining: {{maximumAllowedMass - cargoMass}} kg</p>
+        <button  class="clear" (click)="cargoHold=[]; cargoMass=0; nearCapacity = false">Empty Hold</button>
+    </div>
 </div>
 
